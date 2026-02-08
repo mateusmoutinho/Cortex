@@ -26,6 +26,6 @@ typedef struct appdeps{
 
 } appdeps;
 
-appresponse *mainserver(appdeps *deps){
+appresponse * mainserver(appdeps *deps){
     
 }

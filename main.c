@@ -82,13 +82,13 @@ appdeps global_appdepps = {
 
 // ===============================APP===============================
 
-CwebHttpResponse *main_server(CwebHttpRequest *request) {
-   void *response = app_main(request, &global_appdepps);
+CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
+   void *response = mainserver(request, &global_appdepps);
    return (CwebHttpResponse *)response;
 }
 
 int main(int argc, char *argv[]) {
-    CwebServer server = newCwebSever(5000, main_server);
+    CwebServer server = newCwebSever(5000, main_internal_server);
     CwebServer_start(&server);
     return 0;
 }
