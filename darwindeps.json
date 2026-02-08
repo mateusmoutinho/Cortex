@@ -1,12 +1,5 @@
 [
-    {
-        "dest": "dependencies/doTheWorld.h",
-        "file": "doTheWorld.h",
-        "repo": "OUIsolutions/DoTheWorld",
-        "tag": "11.2.0",
-        "type": "gitrelease",
-        "updated_at": "2025-12-01T13:25:27Z"
-    },
+
     {
         "dest": "dependencies/doTheWorldOne.c",
         "file": "doTheWorldOne.c",
@@ -16,99 +9,11 @@
         "updated_at": "2025-12-01T13:25:26Z"
     },
     {
-        "dest": "dependencies/CArgvParse.h",
-        "file": "CArgvParse.h",
-        "repo": "OUIsolutions/C-argv-parser",
-        "tag": "0.0.2",
-        "type": "gitrelease",
-        "updated_at": "2025-03-17T08:50:26Z"
-    },
-    {
-        "dest": "dependencies/CArgvParse.c",
-        "file": "CArgvParse.c",
-        "repo": "OUIsolutions/C-argv-parser",
-        "tag": "0.0.2",
-        "type": "gitrelease",
-        "updated_at": "2025-03-17T08:50:26Z"
-    },
-    {
-        "dest": "dependencies/CWebStudio.c",
+        "dest": "dependencies/CWebStudioOne.c",
         "file": "CWebStudioOne.c",
         "repo": "OUIsolutions/CWebStudio",
         "tag": "5.3.0",
         "type": "gitrelease",
         "updated_at": "2025-11-29T04:22:16Z"
-    },
-    {
-        "dest": "dependencies/CWebStudio.h",
-        "file": "CWebStudio.h",
-        "repo": "OUIsolutions/CWebStudio",
-        "tag": "5.3.0",
-        "type": "gitrelease",
-        "updated_at": "2025-11-29T04:22:14Z"
-    },
-    {
-        "dest": "dependencies/cJSON.h",
-        "file": "cJSON.h",
-        "repo": "OUIsolutions/cJSON",
-        "tag": "1.17.9",
-        "type": "gitrelease",
-        "updated_at": "2025-10-28T02:32:22Z"
-    },
-    {
-        "dest": "dependencies/cJSON.c",
-        "file": "cJSON.c",
-        "repo": "OUIsolutions/cJSON",
-        "tag": "1.17.9",
-        "type": "gitrelease",
-        "updated_at": "2025-10-28T02:55:40Z"
-    },
-    {
-        "dest": "dependencies/UniversalGarbage.c",
-        "file": "UniversalGarbage.c",
-        "repo": "OUIsolutions/Universal-Garbage-Colector",
-        "tag": "3.0.0",
-        "type": "gitrelease",
-        "updated_at": "2025-03-28T23:44:13Z"
-    },
-    {
-        "dest": "dependencies/UniversalGarbage.h",
-        "file": "UniversalGarbage.h",
-        "repo": "OUIsolutions/Universal-Garbage-Colector",
-        "tag": "3.0.0",
-        "type": "gitrelease",
-        "updated_at": "2025-03-28T23:44:13Z"
-    },
-    {
-        "dest": "dependencies/UniversalSocket.c",
-        "file": "UniversalSocket.c",
-        "repo": "SamuelHenriqueDeMoraisVitrio/UniversalSocket",
-        "tag": "v0.3.0",
-        "type": "gitrelease",
-        "updated_at": "2025-08-15T17:58:35Z"
-    },
-    {
-        "dest": "dependencies/UniversalSocket.h",
-        "file": "UniversalSocket.h",
-        "repo": "SamuelHenriqueDeMoraisVitrio/UniversalSocket",
-        "tag": "v0.3.0",
-        "type": "gitrelease",
-        "updated_at": "2025-08-15T17:58:36Z"
-    },
-    {
-        "dest": "dependencies/CTextEngine.c",
-        "file": "CTextEngine.c",
-        "repo": "OUIsolutions/CTextEngine",
-        "tag": "3.0.000",
-        "type": "gitrelease",
-        "updated_at": "2025-03-08T06:54:30Z"
-    },
-    {
-        "dest": "dependencies/CTextEngine.h",
-        "file": "CTextEngine.h",
-        "repo": "OUIsolutions/CTextEngine",
-        "tag": "3.0.000",
-        "type": "gitrelease",
-        "updated_at": "2025-03-08T06:54:29Z"
     }
 ]
