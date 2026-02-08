@@ -198,7 +198,7 @@ appstart public_appstart(appdeps *deps){
         appstart.port = 3000;
     }
     char *props = deps->malloc(300);
-    deps->sprintf(props,"Hello World from start 2");
+    deps->sprintf(props,"Hello World from start");
     appstart.props = props;
     appstart.free_props = deps->free;
     appstart.error = app_false;
