@@ -379,154 +379,143 @@ appbool wrapper_has_arg_flag(void *argv,const char **flags,int total_flags){
     return CArgvParse_is_flags_present((CArgvParse *)argv,flags,total_flags);
 }
 
-
-// ===============================APP===============================
-void start_app_deps(appdeps *appdeps){
-    
-    // Request data 
-    // Standard library functions
-    appdeps->printf = printf;
-    appdeps->sprintf = sprintf;
-    appdeps->snprintf = snprintf;
-    appdeps->strlen = strlen;
-    appdeps->strcpy = strcpy;
-    appdeps->atoi = atoi;
-    appdeps->atof = atof;
-    appdeps->free = free;
-    appdeps->malloc = malloc;
-    appdeps->calloc = calloc;
-    appdeps->realloc = realloc;
-    
-    // HTTP request wrapper functions
-    appdeps->get_route = wrapper_get_route;
-    appdeps->get_headder = wrapper_get_headder;
-    appdeps->get_headder_key = wrapper_get_headder_key;
-    appdeps->get_headder_value = wrapper_get_headder_value;
-    appdeps->get_method = wrapper_get_method;
-    appdeps->get_query_param = wrapper_get_query_param;
-    appdeps->get_query_param_key = wrapper_get_query_param_key;
-    appdeps->get_query_param_value = wrapper_get_query_param_value;
-    appdeps->read_body = wrapper_read_body;
-    appdeps->read_json = wrapper_read_json;
-
-    // HTTP response wrapper functions
-    appdeps->newappresponse = wrapper_newappresponse;
-    appdeps->setappresponse_headder = wrapper_setappresponse_headder;
-    appdeps->setappresponse_content = wrapper_setappresponse_content;
-    appdeps->setappresponse_status_code = wrapper_setappresponse_status_code;
-    appdeps->send_any = wrapper_send_any;
-    appdeps->send_text = wrapper_send_text;
-    appdeps->send_file = wrapper_send_file;
-    appdeps->send_json = wrapper_send_json;
-
-    // JSON parsing functions
-    appdeps->json_parse = wrapper_json_parse;
-    appdeps->json_parse_file = wrapper_json_parse_file;
-    appdeps->json_delete = wrapper_json_delete;
-
-    // JSON serialization functions
-    appdeps->json_print = wrapper_json_print;
-    appdeps->json_print_unformatted = wrapper_json_print_unformatted;
-    appdeps->json_save_file = wrapper_json_save_file;
-    appdeps->json_free_string = wrapper_json_free_string;
-
-    // JSON creation functions
-    appdeps->json_create_object = wrapper_json_create_object;
-    appdeps->json_create_array = wrapper_json_create_array;
-    appdeps->json_create_string = wrapper_json_create_string;
-    appdeps->json_create_number = wrapper_json_create_number;
-    appdeps->json_create_bool = wrapper_json_create_bool;
-    appdeps->json_create_null = wrapper_json_create_null;
-    appdeps->json_duplicate = wrapper_json_duplicate;
-
-    // JSON object manipulation functions
-    appdeps->json_get_object_item = wrapper_json_get_object_item;
-    appdeps->json_has_object_item = wrapper_json_has_object_item;
-    appdeps->json_add_item_to_object = wrapper_json_add_item_to_object;
-    appdeps->json_delete_item_from_object = wrapper_json_delete_item_from_object;
-    appdeps->json_replace_item_in_object = wrapper_json_replace_item_in_object;
-    appdeps->json_add_string_to_object = wrapper_json_add_string_to_object;
-    appdeps->json_add_number_to_object = wrapper_json_add_number_to_object;
-    appdeps->json_add_bool_to_object = wrapper_json_add_bool_to_object;
-    appdeps->json_add_null_to_object = wrapper_json_add_null_to_object;
-    appdeps->json_add_object_to_object = wrapper_json_add_object_to_object;
-    appdeps->json_add_array_to_object = wrapper_json_add_array_to_object;
-
-    // JSON array manipulation functions
-    appdeps->json_get_array_size = wrapper_json_get_array_size;
-    appdeps->json_get_array_item = wrapper_json_get_array_item;
-    appdeps->json_add_item_to_array = wrapper_json_add_item_to_array;
-    appdeps->json_insert_item_in_array = wrapper_json_insert_item_in_array;
-    appdeps->json_replace_item_in_array = wrapper_json_replace_item_in_array;
-    appdeps->json_delete_item_from_array = wrapper_json_delete_item_from_array;
-
-    // JSON type checking functions
-    appdeps->json_is_object = wrapper_json_is_object;
-    appdeps->json_is_array = wrapper_json_is_array;
-    appdeps->json_is_string = wrapper_json_is_string;
-    appdeps->json_is_number = wrapper_json_is_number;
-    appdeps->json_is_bool = wrapper_json_is_bool;
-    appdeps->json_is_null = wrapper_json_is_null;
-    appdeps->json_is_true = wrapper_json_is_true;
-    appdeps->json_is_false = wrapper_json_is_false;
-
-    // JSON value getters
-    appdeps->json_get_string_value = wrapper_json_get_string_value;
-    appdeps->json_get_number_value = wrapper_json_get_number_value;
-
-    // JSON comparison
-    appdeps->json_compare = wrapper_json_compare;
-    // IO   
-    appdeps->file_exists = wrapper_file_exists;
-    appdeps->dir_exists = wrapper_dir_exists;
-    appdeps->read_any = wrapper_read_any;
-    appdeps->read_string = wrapper_read_string;
-    appdeps->write_any = wrapper_write_any;
-    appdeps->write_string = wrapper_write_string;
-    appdeps->delete_any = wrapper_delete_any;
-    appdeps->create_dir = wrapper_create_dir;
-
-    // String array manipulation functions
-    appdeps->delete_stringarray = wrapper_delete_stringarray;
-    appdeps->get_stringarray_size = wrapper_get_stringarray_size;
-    appdeps->get_stringarray_item = wrapper_get_stringarray_item;
-
-    // List functions
-    appdeps->list_files = wrapper_list_files;
-    appdeps->list_dirs = wrapper_list_dirs;
-    appdeps->list_any = wrapper_list_any;
-    appdeps->list_files_recursively = wrapper_list_files_recursively;
-    appdeps->list_dirs_recursively = wrapper_list_dirs_recursively;
-    appdeps->list_any_recursively = wrapper_list_any_recursively;
-
-    // ArgvParse functions
-    appdeps->get_arg_value = wrapper_get_arg_value;
-    appdeps->get_arg_count = wrapper_get_arg_count;
-    appdeps->get_arg_flag_value = wrapper_get_arg_flag_value;
-    appdeps->get_arg_flag_count = wrapper_get_arg_flag_count;
-    appdeps->has_arg_flag = wrapper_has_arg_flag;
-}
-
 // ===============================GLOBALS======================================
+CArgvParse global_argv = {0};
 appstart global_start_config ={0};
 appdeps global_appdeps = {
+    // Standard library functions
+    .printf = printf,
+    .sprintf = sprintf,
+    .snprintf = snprintf,
+    .strlen = strlen,
+    .strcpy = strcpy,
+    .atoi = atoi,
+    .atof = atof,
+    .free = free,
+    .malloc = malloc,
+    .calloc = calloc,
+    .realloc = realloc,
     
+    // HTTP request wrapper functions
+    .get_route = wrapper_get_route,
+    .get_headder = wrapper_get_headder,
+    .get_headder_key = wrapper_get_headder_key,
+    .get_headder_value = wrapper_get_headder_value,
+    .get_method = wrapper_get_method,
+    .get_query_param = wrapper_get_query_param,
+    .get_query_param_key = wrapper_get_query_param_key,
+    .get_query_param_value = wrapper_get_query_param_value,
+    .read_body = wrapper_read_body,
+    .read_json = wrapper_read_json,
+
+    // HTTP response wrapper functions
+    .newappresponse = wrapper_newappresponse,
+    .setappresponse_headder = wrapper_setappresponse_headder,
+    .setappresponse_content = wrapper_setappresponse_content,
+    .setappresponse_status_code = wrapper_setappresponse_status_code,
+    .send_any = wrapper_send_any,
+    .send_text = wrapper_send_text,
+    .send_file = wrapper_send_file,
+    .send_json = wrapper_send_json,
+
+    // JSON parsing functions
+    .json_parse = wrapper_json_parse,
+    .json_parse_file = wrapper_json_parse_file,
+    .json_delete = wrapper_json_delete,
+
+    // JSON serialization functions
+    .json_print = wrapper_json_print,
+    .json_print_unformatted = wrapper_json_print_unformatted,
+    .json_save_file = wrapper_json_save_file,
+    .json_free_string = wrapper_json_free_string,
+
+    // JSON creation functions
+    .json_create_object = wrapper_json_create_object,
+    .json_create_array = wrapper_json_create_array,
+    .json_create_string = wrapper_json_create_string,
+    .json_create_number = wrapper_json_create_number,
+    .json_create_bool = wrapper_json_create_bool,
+    .json_create_null = wrapper_json_create_null,
+    .json_duplicate = wrapper_json_duplicate,
+
+    // JSON object manipulation functions
+    .json_get_object_item = wrapper_json_get_object_item,
+    .json_has_object_item = wrapper_json_has_object_item,
+    .json_add_item_to_object = wrapper_json_add_item_to_object,
+    .json_delete_item_from_object = wrapper_json_delete_item_from_object,
+    .json_replace_item_in_object = wrapper_json_replace_item_in_object,
+    .json_add_string_to_object = wrapper_json_add_string_to_object,
+    .json_add_number_to_object = wrapper_json_add_number_to_object,
+    .json_add_bool_to_object = wrapper_json_add_bool_to_object,
+    .json_add_null_to_object = wrapper_json_add_null_to_object,
+    .json_add_object_to_object = wrapper_json_add_object_to_object,
+    .json_add_array_to_object = wrapper_json_add_array_to_object,
+
+    // JSON array manipulation functions
+    .json_get_array_size = wrapper_json_get_array_size,
+    .json_get_array_item = wrapper_json_get_array_item,
+    .json_add_item_to_array = wrapper_json_add_item_to_array,
+    .json_insert_item_in_array = wrapper_json_insert_item_in_array,
+    .json_replace_item_in_array = wrapper_json_replace_item_in_array,
+    .json_delete_item_from_array = wrapper_json_delete_item_from_array,
+
+    // JSON type checking functions
+    .json_is_object = wrapper_json_is_object,
+    .json_is_array = wrapper_json_is_array,
+    .json_is_string = wrapper_json_is_string,
+    .json_is_number = wrapper_json_is_number,
+    .json_is_bool = wrapper_json_is_bool,
+    .json_is_null = wrapper_json_is_null,
+    .json_is_true = wrapper_json_is_true,
+    .json_is_false = wrapper_json_is_false,
+
+    // JSON value getters
+    .json_get_string_value = wrapper_json_get_string_value,
+    .json_get_number_value = wrapper_json_get_number_value,
+
+    // JSON comparison
+    .json_compare = wrapper_json_compare,
+    
+    // IO functions
+    .file_exists = wrapper_file_exists,
+    .dir_exists = wrapper_dir_exists,
+    .read_any = wrapper_read_any,
+    .read_string = wrapper_read_string,
+    .write_any = wrapper_write_any,
+    .write_string = wrapper_write_string,
+    .delete_any = wrapper_delete_any,
+    .create_dir = wrapper_create_dir,
+
+    // String array manipulation functions
+    .delete_stringarray = wrapper_delete_stringarray,
+    .get_stringarray_size = wrapper_get_stringarray_size,
+    .get_stringarray_item = wrapper_get_stringarray_item,
+
+    // List functions
+    .list_files = wrapper_list_files,
+    .list_dirs = wrapper_list_dirs,
+    .list_any = wrapper_list_any,
+    .list_files_recursively = wrapper_list_files_recursively,
+    .list_dirs_recursively = wrapper_list_dirs_recursively,
+    .list_any_recursively = wrapper_list_any_recursively,
+
+    // ArgvParse functions
+    .get_arg_value = wrapper_get_arg_value,
+    .get_arg_count = wrapper_get_arg_count,
+    .get_arg_flag_value = wrapper_get_arg_flag_value,
+    .get_arg_flag_count = wrapper_get_arg_flag_count,
+    .has_arg_flag = wrapper_has_arg_flag
 };
 CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
-    
-    appdeps appdeps = {0};
-    appdeps.apprequest = (const void*)request;
-    start_app_deps(&appdeps);    
-    const void *response = global_start_config.mainserver(&appdeps,global_start_config.props);
+    global_appdeps.apprequest = (const void*)request;
+    const void *response = global_start_config.mainserver(&global_appdeps,global_start_config.props);
     return (CwebHttpResponse *)response;
 }
 
 int main(int argc, char *argv[]) {
-    appdeps appdeps = {0};
-    start_app_deps(&appdeps);
-    CArgvParse args = newCArgvParse(argc,argv);
-    appdeps.argv = &args;
-    global_start_config = public_appstart(&appdeps);
+    global_argv = newCArgvParse(argc,argv);
+    global_appdeps.argv = &global_argv;
+    global_start_config = public_appstart(&global_appdeps);
     if(global_start_config.error){
         return global_start_config.error;
     }
