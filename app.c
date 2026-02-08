@@ -15,7 +15,7 @@ typedef struct appdeps{
     const char *(*get_query_param_key)(const apprequest *apprequest,int index);
     const char *(*get_query_param_value)(const apprequest *apprequest,int index);
    
-    const unsigned char *(*read_body)(const apprequest *apprequest, long size);
+    const unsigned char *(*read_body)(const apprequest *apprequest, long size, long *readed_size);
     const appresponse *(*send_any)(const unsigned char *content,long content_size,int status_code);
     const appresponse *(*send_file)(const char *path,int status_code);
 
