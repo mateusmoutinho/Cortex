@@ -514,16 +514,20 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     appdeps appdeps = {0};
     appdeps.apprequest = (const void*)request;
     start_app_deps(&appdeps);    
-    const void *response = mainserver(&appdeps);
+    const void *response = start_config.mainserver(&appdeps,start_config.props);
     return (CwebHttpResponse *)response;
 }
 
 int main(int argc, char *argv[]) {
     appdeps appdeps = {0};
     start_app_deps(&appdeps);
+    CArgvParse args = newCArgvParse(argc,argv);
+    appdeps.argv = &args;
     start_config = public_appstart(&appdeps);
-
-    CwebServer server = newCwebSever(5000, main_internal_server);
+    if(start_config.error){
+        return start_config.error;
+    }
+    CwebServer server = newCwebSever(start_config.port, main_internal_server);
     CwebServer_start(&server);
     return 0;
 }

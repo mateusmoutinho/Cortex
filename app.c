@@ -165,7 +165,7 @@ typedef struct appdeps{
 
 typedef struct appstart {
     int port;
-    appbool error;
+    int error;
     void *props;
     const appresponse * (*mainserver)(appdeps *d,void *props);
     void (*free_props)(void *props);
@@ -180,13 +180,13 @@ const appresponse * private_mainserver(appdeps *deps,void *props){
 
 appstart public_appstart(appdeps *deps){
 
-    appstart appstart;
+    appstart appstart = {0};
 
     const char *start_port = deps->get_arg_flag_value(deps->argv, (const char *[]){"--port","-p"}, 2, 0);
     if(start_port){
         appstart.port = deps->atoi(start_port);
         if(appstart.port < 0){
-            appstart.error = app_true;
+            appstart.error = 1;
             deps->printf("Invalid port number: %s\n", start_port);
             return appstart;
         }
