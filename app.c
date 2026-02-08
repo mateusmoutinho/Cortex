@@ -12,7 +12,7 @@ typedef struct appdeps{
 
     int (*printf)(const char *format, ...);
 
-    
+
     const apprequest *apprequest;
     const char *route;
 
@@ -38,5 +38,5 @@ typedef struct appdeps{
 } appdeps;
 
 appresponse * mainserver(appdeps *deps){
-    
+   
 }
