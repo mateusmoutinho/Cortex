@@ -6,8 +6,8 @@
 #include "app.c"
 
 // ===============================GLOBALS======================================
-int global_argc;
-char **global_argv;
+appstart start_config ={0};
+
 
 // ===============================SERVER WRAPPERS===============================
 
@@ -519,8 +519,10 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
 }
 
 int main(int argc, char *argv[]) {
-    global_argc = argc;
-    global_argv = argv;
+    appdeps appdeps = {0};
+    start_app_deps(&appdeps);
+    start_config = public_appstart(&appdeps);
+
     CwebServer server = newCwebSever(5000, main_internal_server);
     CwebServer_start(&server);
     return 0;
