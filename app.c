@@ -158,7 +158,7 @@ typedef struct appdeps{
     const char *(*get_arg_flag_value)(const appargv *argv,const char **flags,int total_flags,int index); // --name || n mateus : mateus
     int (*get_arg_flag_count)(const appargv *argv,const char **flags,int total_flags); // --name || n : true
 
-    appbool (*has_arg_flag)(appargv *argv,const char **flags,int total_flags); // --name : true
+    appbool (*has_arg_flag)(const appargv *argv,const char **flags,int total_flags); // --name : true
     
 
 } appdeps;
