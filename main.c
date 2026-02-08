@@ -86,7 +86,7 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
         .get_query_param_value = wrapper_get_query_param_value,
         .read_body = wrapper_read_body,
         .send_any = wrapper_send_any,
-        .send_file = wrapper_send_file,
+        .send_file = wrapper_send_file
     };
 
    const void *response = mainserver(&appdeps);

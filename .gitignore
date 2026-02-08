@@ -8,3 +8,4 @@ libs
 quickbuild.sh
 app
 start_firmware.sh
+debug.so

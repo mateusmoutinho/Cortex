@@ -6,17 +6,12 @@ function linux_bin()
     image.add_comptime_command("apk update")
     image.add_comptime_command("apk add --no-cache gcc g++ musl-dev curl")
 
-    local compiler = "gcc"
-    if LAUNGUAGE == "cpp" then
-        compiler = "g++"
-    end
-
     
     image.start({
         volumes = {
             {"./release", "/release"},
         },
-        command = compiler .. [[ --static /release/]] .. PROJECT_NAME .. [[.c -o /release/]] .. PROJECT_NAME .. [[_linux_bin.out]]
+        command = COMPILER .. [[ --static /release/]] .. PROJECT_NAME .. [[.c -o /release/]] .. PROJECT_NAME .. [[_linux_bin.out]]
     })
 
     print("\tLinux binary build completed")
