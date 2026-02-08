@@ -26,7 +26,10 @@ typedef struct appdeps{
     appsize (*strlen)(const char *s);
     char *(*strcpy)(char *dst, const char *src);
     
-
+    //nuber conversions
+    int (*atoi)(const char *str);
+    double (*atof)(const char *str);
+    
     //=====================request==============================================
     const char *(*get_headder)(const apprequest *apprequest, const char *key);
     const char *(*get_headder_key)(const apprequest *apprequest,int index);

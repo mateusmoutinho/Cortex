@@ -85,6 +85,8 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
         .snprintf = snprintf,
         .strlen = strlen,
         .strcpy = strcpy,
+        .atoi = atoi,
+        .atof = atof,
         .get_headder = wrapper_get_headder,
         .get_headder_key = wrapper_get_headder_key,
         .get_headder_value = wrapper_get_headder_value,
