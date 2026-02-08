@@ -13,6 +13,6 @@ darwin.add_recipe({
     description = "Make a single so to be used combined with CWebStudioFirmware",
     outs = {"release/" .. PROJECT_NAME .. ".so"},
     inputs = {"main.c", "app.c", "dependencies","builds"},
-    requires={"amalgamation"}
+    requires={"amalgamation"},
     callback = firmware_build
 })
