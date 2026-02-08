@@ -309,7 +309,7 @@ void *wrapper_list_dirs(const char *path){
     DtwStringArray *dirs = dtw_list_dirs(path,false);
     return (void *)dirs;
 }
-void *wrapper_list_all(const char *path){
+void *wrapper_list_any(const char *path){
     DtwStringArray *all = dtw_list_all(path,false);
     return (void *)all;
 }
@@ -321,7 +321,7 @@ void *wrapper_list_dirs_recursively(const char *path){
     DtwStringArray *dirs = dtw_list_dirs_recursively(path,false);
     return (void *)dirs;
 }
-void *wrapper_list_all_recursively(const char *path){
+void *wrapper_list_any_recursively(const char *path){
     DtwStringArray *all = dtw_list_all_recursively(path,false);
     return (void *)all;
 }
@@ -424,11 +424,11 @@ void start_app_deps(appdeps *appdeps){
     appdeps->write_any = wrapper_write_any;
     appdeps->write_string = wrapper_write_string;
     appdeps->delete_any = wrapper_delete_any;
-    
+
     // String array manipulation functions
-    appdeps->stringarray_delete = wrapper_delete_stringarray;
-    appdeps->stringarray_get_size = wrapper_get_stringarray_size;
-    appdeps->stringarray_get_item = wrapper_get_stringarray_item;
+    appdeps->delete_stringarray = wrapper_delete_stringarray;
+    appdeps->get_stringarray_size = wrapper_get_stringarray_size;
+    appdeps->get_stringarray_item = wrapper_get_stringarray_item;
 
     // List functions
     appdeps->list_files = wrapper_list_files;
