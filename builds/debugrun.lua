@@ -1,5 +1,5 @@
 function debug_run()
-    os.execute("CWebFirmware --port " .. PORT .. " --dynamic_lib debug.so --callback main_internal_server --password whatever")
+    os.execute("CWebStudioFirmware --port " .. PORT .. " --dynamic_lib debug.so --callback main_internal_server --password whatever")
     local old_hash = ""
     while true do
         local changes_hasher = darwin.dtw.newHasher()
