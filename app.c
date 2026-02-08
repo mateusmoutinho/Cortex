@@ -7,7 +7,8 @@
 
 typedef void apprequest;
 typedef void appresponse;
-typedef unsigned long appsize ;
+typedef void appjson;
+typedef unsigned long appsize;
 typedef int appbool;
 #define app_true 1
 #define app_false 0
@@ -15,8 +16,6 @@ typedef int appbool;
 
 typedef struct appdeps{
 
-    const apprequest *apprequest;
-    const char *route;
 
     //=====================std==============================================
     int (*printf)(const char *format, ...);
@@ -29,20 +28,24 @@ typedef struct appdeps{
     //nuber conversions
     int (*atoi)(const char *str);
     double (*atof)(const char *str);
-    
+
     //=====================request==============================================
+    const apprequest *apprequest;
+    const char * (*get_route)(const apprequest *apprequest);
+    const char *(*get_method)(const apprequest *apprequest); 
+
     const char *(*get_headder)(const apprequest *apprequest, const char *key);
     const char *(*get_headder_key)(const apprequest *apprequest,int index);
     const char *(*get_headder_value)(const apprequest *apprequest,int index);
 
-
-    const char *(*get_method)(const apprequest *apprequest); 
     const char *(*get_query_param)(const apprequest *apprequest, const char *key);
     const char *(*get_query_param_key)(const apprequest *apprequest,int index);
     const char *(*get_query_param_value)(const apprequest *apprequest,int index);
    
     const unsigned char *(*read_body)(const apprequest *apprequest, long size, long *readed_size);
+    const appjson * (*read_json)(const apprequest *apprequest,long size);
     const appresponse *(*send_any)(const unsigned char *content,long content_size,const char *content_type, int status_code);
+    const appresponse *(*send_text)(const char *text, int status_code);
     const appresponse *(*send_file)(const char *path,const char *content_type, int status_code);
 
 } appdeps;

@@ -4,6 +4,16 @@
 #include "dependencies/CWebStudioOne.c"
 #include "app.c"
 // ===============================SERVER WRAPPERS===============================
+
+const char *wrapper_get_route(const void *apprequest){
+    CwebHttpRequest *request = (CwebHttpRequest *)apprequest;
+    return request->route;
+}
+const char *wrapper_get_method(const void *apprequest){
+    CwebHttpRequest *request = (CwebHttpRequest *)apprequest;
+    return request->method;
+}
+//================================HEADDERS================================
 const char *wrapper_get_headder(const void *apprequest, const char *key){
     return CwebHttpRequest_get_header((CwebHttpRequest *)apprequest, key);
 }
@@ -28,10 +38,7 @@ const char *wrapper_get_headder_value(const void *apprequest, int index){
     return keyval->value;
 }
 
-const char *wrapper_get_method(const void *apprequest){
-    CwebHttpRequest *request = (CwebHttpRequest *)apprequest;
-    return request->method;
-}
+//================================PARAMS================================
 const char *wrapper_get_query_param(const void *apprequest, const char *key){
     CwebHttpRequest *request = (CwebHttpRequest *)apprequest;
     return CwebHttpRequest_get_param(request, key);
@@ -63,11 +70,19 @@ const unsigned char *wrapper_read_body(const void *apprequest, long size, long *
     *readed_size = request->content_length;
     return (const unsigned char *)response_body;
 }
+const void *wrapper_read_json(const void *apprequest, long size){
+    CwebHttpRequest *request = (CwebHttpRequest *)apprequest;
+    cJSON *json = CWebHttpRequest_read_cJSON(request, size);
+    return (const void *)json;
+}
 
+//================================RESPONSE================================
 const void  *wrapper_send_any(const unsigned char *content,long content_size,const char *content_type, int status_code){
     return (void *)cweb_send_any(content_type, content_size, (unsigned char *)content, status_code);
 }
-
+const void *wrapper_send_text(const char *text, int status_code){
+    return (void *)cweb_send_text(text, status_code);
+}
 const void *wrapper_send_file(const char *path,const char *content_type, int status_code){
     return (void *)cweb_send_file(path, content_type, status_code);
 }
@@ -79,8 +94,7 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     appdeps appdeps = {0};
     
     // Request data
-    appdeps.apprequest = (const void*)request;
-    appdeps.route = request->route;
+  
     
     // Standard library functions
     appdeps.printf = printf;
@@ -92,6 +106,8 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     appdeps.atof = atof;
     
     // HTTP request wrapper functions
+    appdeps.apprequest = (const void*)request;
+    appdeps.get_route = wrapper_get_route;
     appdeps.get_headder = wrapper_get_headder;
     appdeps.get_headder_key = wrapper_get_headder_key;
     appdeps.get_headder_value = wrapper_get_headder_value;
@@ -103,6 +119,7 @@ CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     
     // HTTP response wrapper functions
     appdeps.send_any = wrapper_send_any;
+    appdeps.send_text = wrapper_send_text;
     appdeps.send_file = wrapper_send_file;
 
    const void *response = mainserver(&appdeps);
