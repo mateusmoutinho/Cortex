@@ -1,11 +1,15 @@
 
 function local_linux_bin_build()
     
-    local dependencies_files = darwin.dtw.list_files("dependencies", true)
+    local dependencies_files = darwin.dtw.list_files("dependencies", false)
+    darwin.dtw.create_dir_recursively("libs")
     for i=1, #dependencies_files do
         local file = dependencies_files[i]
         if string.sub(file, -2) == ".c" then
-            os.execute("gcc -c "..file.." -o libs/"..file)
+            local out = string.sub(file, 1, -2)
+            local command = "gcc -c dependencies/"..file.." -o libs/"..out.."o"
+            print("command: ", command) 
+            os.execute(command)
         end
     end
 
@@ -22,7 +26,8 @@ function local_linux_bin_build()
     for i=1, #dependencies_files do
         local file = dependencies_files[i]
         if string.sub(file, -2) == ".c" then
-            compilation = compilation.." libs/"..file
+            local out = string.sub(file, 1, -2)
+            compilation = compilation.." libs/"..out.."o"
         end
     end
     compilation = compilation.." -ldl"
