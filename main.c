@@ -362,18 +362,18 @@ void *wrapper_list_any_recursively(const char *path){
 }
 
 //================================ARGV PARSER FUNCTIONS================================
-const char *wrapper_get_arg_value(void *argv,int index){
+const char *wrapper_get_arg_value(const void *argv,int index){
     return CArgvParse_get_arg((CArgvParse *)argv,index);
 }
-int wrapper_get_arg_count(void *argv){
+int wrapper_get_arg_count(const void *argv){
     return ((CArgvParse *)argv)->total_args;
 }
 
-const char *wrapper_get_arg_flag_value(void *argv,const char **flags,int total_flags,int index){
+const char *wrapper_get_arg_flag_value(const void *argv,const char **flags,int total_flags,int index){
     return CArgvParse_get_flag((CArgvParse *)argv,flags,total_flags,index);
 }
 
-int wrapper_get_arg_flag_count(void *argv,const char **flags,int total_flags){
+int wrapper_get_arg_flag_count(const void *argv,const char **flags,int total_flags){
     return CArgvParse_get_flag_size((CArgvParse *)argv,flags,total_flags);
 }
 

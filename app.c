@@ -182,10 +182,10 @@ appstart public_appstart(appdeps *deps){
 
     appstart appstart = {0};
 
-    const char *start_port = deps->get_arg_flag_value(deps->argv, (const char *[]){"--port","-p"}, 2, 0);
+    const char *start_port = deps->get_arg_flag_value(deps->argv, (const char *[]){"port","p"}, 2, 0);
     if(start_port){
         appstart.port = deps->atoi(start_port);
-        if(appstart.port < 0){
+        if(appstart.port <= 0){
             appstart.error = 1;
             deps->printf("Invalid port number: %s\n", start_port);
             return appstart;
