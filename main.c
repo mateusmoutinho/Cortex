@@ -291,6 +291,9 @@ void wrapper_write_string(const char *path, const char *content){
 void wrapper_delete_any(const char *path){
     dtw_remove_any(path);
 }
+void wrapper_create_dir(const char *path){
+    dtw_create_dir_recursively(path);
+}
 void wrapper_delete_stringarray(void *array){
     DtwStringArray_free((DtwStringArray *)array);
 }
@@ -424,6 +427,7 @@ void start_app_deps(appdeps *appdeps){
     appdeps->write_any = wrapper_write_any;
     appdeps->write_string = wrapper_write_string;
     appdeps->delete_any = wrapper_delete_any;
+    appdeps->create_dir = wrapper_create_dir;
 
     // String array manipulation functions
     appdeps->delete_stringarray = wrapper_delete_stringarray;

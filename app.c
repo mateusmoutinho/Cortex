@@ -125,7 +125,7 @@ typedef struct appdeps{
     void (*write_any)(const char *path,const unsigned char *content, long size);
     void (*write_string)(const char *path,const char *content);
     void (*delete_any)(const char *path);
-
+    void (*create_dir)(const char *path);
 
     void (*delete_stringarray)(appstringarray *array); 
     long (*get_stringarray_size)(appstringarray *array);
