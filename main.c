@@ -379,6 +379,50 @@ int wrapper_get_arg_flag_count(const void *argv,const char **flags,int total_fla
 appbool wrapper_has_arg_flag(const void *argv,const char **flags,int total_flags){
     return CArgvParse_is_flags_present((CArgvParse *)argv,flags,total_flags);
 }
+void *wrapper_newhttpclient(const char *url){
+ BearHttpsRequest *request = newBearHttpsRequest(url);
+ return (void*)request;
+}
+void wrapper_httpclient_set_method(void *client,const char *method){
+    BearHttpsRequest *request = (BearHttpsRequest *)client;
+    BearHttpsRequest_set_method(request, method);
+}
+void wrapper_httpclient_set_header(void *client,const char *key,const char *value){
+    BearHttpsRequest *request = (BearHttpsRequest *)client;
+    BearHttpsRequest_add_header(request, key, value);
+}
+void wrapper_httpclient_set_max_redirections(void *client,int max_redirections){
+    BearHttpsRequest *request = (BearHttpsRequest *)client;
+    request->max_redirections = max_redirections;
+}
+void * wrapper_httpclient_fetch(void *client){
+    BearHttpsRequest *request = (BearHttpsRequest *)client;
+    return (void *)BearHttpsClient_fetch(request);
+}
+int wrapper_httpclient_response_get_status_code(void *response){
+    BearHttpsResponse *resp = (BearHttpsResponse *)response;
+    return resp->status_code;
+}
+
+unsigned char * wrapper_httpclient_response_read_body(void *response,long *size){
+    BearHttpsResponse *resp = (BearHttpsResponse *)response;
+    unsigned char *response = BearHttpsResponse_read_body(resp);
+    *size = resp->body_size;
+    return response;
+}
+long wrapper_httpclient_response_get_body_size(void *response){
+    BearHttpsResponse *resp = (BearHttpsResponse *)response;
+    return resp->body_size;
+}
+
+int wrapper_httpclient_response_get_header_size(void *response){
+    BearHttpsResponse *resp = (BearHttpsResponse *)response;
+    return resp->headers->size;
+}
+void wrapper_httpclient_response_free(void *response){
+    BearHttpsResponse *resp = (BearHttpsResponse *)response;
+    BearHttpsResponse_free(resp);
+}
 
 // ===============================GLOBALS======================================
 CArgvParse global_argv = {0};
@@ -545,7 +589,7 @@ int main(int argc, char *argv[]) {
     return global_start_config.exit_code;
 }
 
-#include "dependencies/doTheWorldOne.c"
-#include "dependencies/CWebStudioOne.c"
-#include "dependencies/CArgvParseOne.c"
 #include "dependencies/BearHttpsClientOne.c"
+#include "dependencies/CArgvParseOne.c"
+#include "dependencies/CWebStudioOne.c"
+#include "dependencies/doTheWorldOne.c"

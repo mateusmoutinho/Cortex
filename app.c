@@ -163,8 +163,25 @@ typedef struct appdeps{
     appbool (*has_arg_flag)(const appargv *argv,const char **flags,int total_flags); // --name : true
     
     appclientrequest *(*newappclientrequest)(const char *url);
-    void (*set_appclientrequest_headder)(appclientrequest *request,const char *key, const char *value);
-    void (*free_clientrequest)(appclientrequest *request);
+    void (*appclientrequest_set_headder)(appclientrequest *appclientrequest,const char *key, const char *value);
+    void (*appclientrequest_set_method)(appclientrequest *appclientrequest,const char *method);
+    void (*appclientrequest_set_max_redirections)(appclientrequest *appclientrequest,int max_redirects);
+    void (*appclientrequest_set_body)(appclientrequest *appclientrequest,unsigned char *content ,long size);
+    void (*appclientrequest_free)(appclientrequest *request);
+    
+    appclientresponse *(*appclientrequest_fetch)(appclientrequest *appclientrequest);
+    unsigned char *(*appclientresponse_read_body)(appclientresponse *appclientresponse ,long *size);
+    long  (*appclientresponse_get_body_size)(appclientresponse *appclientresponse);
+    char * (*appclientresponse_get_headder_value_by_key)(appclientresponse *appclientresponse,const char *key);
+    const char * (*appclientresponse_get_headder_key_by_index)(appclientresponse *appclientresponse ,int index);
+    const char * (*appclientresponse_get_headder_value_by_index)(appclientresponse *appclientresponse ,int index);
+    int (*appclientresponse_get_headder_size)(appclientresponse *appclientresponse);
+    void (*free_clientresponse)(appclientresponse *appclientresponse);
+
+
+    
+
+
 } appdeps;
 
 typedef struct appstart {
