@@ -80,6 +80,11 @@ or
 ```bash
 darwin run_blueprint --target rpm --provider docker
 ```
+### Debug Run 
+you can run the application in debug mode, which will automatically rebuild the debug.so dynamic library whenever the source code changes and run the application with it. to do that, you can use the following command:
+```bash
+darwin run_blueprint --target debug --compiler "gcc"
+```
 
 
 ### Build Requirements
@@ -117,6 +122,15 @@ to install [Docker](https://www.docker.com/) or [Podman](https://podman.io/), yo
 - [Docker Installation Guide](https://docs.docker.com/get-docker/)
 - [Podman Installation Guide](https://podman.io/getting-started/installation)
 note that you can chose from docker or podman, by passing --provider at any [Darwin](https://github.com/OUIsolutions/Darwin)  command you want.
+
+### [CWebStudioFirmware](https://github.com/OUIsolutions/CWebStudioFirmware)
+to install [CWebStudioFirmware](https://github.com/OUIsolutions/CWebStudioFirmware) you can navegate to the [releases page](https://github.com/OUIsolutions/CWebStudioFirmware/releases/tag/0.7.0) and download the precompiled binary for your operating system.
+
+if you are using linux or macos, you can use the following command:
+(note that curl must be installed)
+```bash
+curl -L https://github.com/OUIsolutions/CWebStudioFirmware/releases/download/0.7.0/CWebStudioFirmware.c -o CWebStudioFirmware.c && gcc CWebStudioFirmware.c -o CWebStudioFirmware.out && sudo mv CWebStudioFirmware.out /usr/local/bin/CWebStudioFirmware && rm CWebStudioFirmware.c 
+```
 
 
 
