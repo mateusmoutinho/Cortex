@@ -501,9 +501,15 @@ void *wrapper_list_assets(const char *path){
   
 }
 
+// ===============================SERVER WRAPPER================================
+const appserverresponse *(*global_app_handler)(appdeps *d, void *props) = NULL;
+void *global_app_props = NULL;
+appbool global_firmware_mode = 0;
+
+int wrapper_start_server(int port, const appserverresponse *(*handler)(appdeps *d, void *props), void *props, appbool single_process);
+
 // ===============================GLOBALS======================================
 CArgvParse global_argv = {0};
-appstart global_start_config ={0};
 appdeps global_appdeps = {
     // Standard library functions
     .printf = printf,
@@ -644,46 +650,45 @@ appdeps global_appdeps = {
     .appclientresponse_get_headder_size = wrapper_httpclient_response_get_header_size,
     .free_clientresponse = wrapper_httpclient_response_free,
     .get_asset_content = wrapper_get_asset_content,
-    .list_assets = wrapper_list_assets
+    .list_assets = wrapper_list_assets,
+    .start_server = wrapper_start_server
 };
 CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     global_appdeps.appserverrequest = (const void*)request;
-    const void *response = global_start_config.mainserver(&global_appdeps,global_start_config.props);
+    const void *response = global_app_handler(&global_appdeps, global_app_props);
     return (CwebHttpResponse *)response;
 }
 
-CwebHttpResponse *main_internal_server_firmware(CwebHttpRequest *request,int argc,char *argv[]) {
-    global_appdeps.appserverrequest = (const void*)request;
-    global_argv = newCArgvParse(argc,argv);
-    global_appdeps.argv = &global_argv;
-    global_start_config = public_appstart(&global_appdeps);
-    if(!global_start_config.start_server){
-        return NULL;
-    }
+int wrapper_start_server(int port, const appserverresponse *(*handler)(appdeps *d, void *props), void *props, appbool single_process) {
+    global_app_handler = handler;
+    global_app_props = props;
+    if (global_firmware_mode) return 0;
+    CwebServer server = newCwebSever(port, main_internal_server);
+    server.use_static = false;
+    #if !defined(_WIN32) && !defined(_WIN64)
+        server.single_process = single_process;
+    #endif
+    CwebServer_start(&server);
+    return 0;
+}
 
-    const void *response = global_start_config.mainserver(&global_appdeps,global_start_config.props);
-    if(global_start_config.free_props){
-        global_start_config.free_props(global_start_config.props);
+CwebHttpResponse *main_internal_server_firmware(CwebHttpRequest *request, int argc, char *argv[]) {
+    global_firmware_mode = 1;
+    global_argv = newCArgvParse(argc, argv);
+    global_appdeps.argv = &global_argv;
+    global_appdeps.appserverrequest = (const void*)request;
+    appmain(&global_appdeps);
+    if (global_app_handler) {
+        const void *response = global_app_handler(&global_appdeps, global_app_props);
+        return (CwebHttpResponse *)response;
     }
-    return (CwebHttpResponse *)response;
+    return NULL;
 }
 
 int main(int argc, char *argv[]) {
-    global_argv = newCArgvParse(argc,argv);
+    global_argv = newCArgvParse(argc, argv);
     global_appdeps.argv = &global_argv;
-    global_start_config = public_appstart(&global_appdeps);
-    if(global_start_config.start_server){
-        CwebServer server = newCwebSever(global_start_config.port, main_internal_server);
-        server.use_static = false;
-        #if !defined(_WIN32) && !defined(_WIN64)
-            server.single_process =   global_start_config.single_process;
-        #endif
-        CwebServer_start(&server);
-    }
-    if(global_start_config.free_props){
-        global_start_config.free_props(global_start_config.props);
-    }
-    return global_start_config.exit_code;
+    return appmain(&global_appdeps);
 }
 #include "assets.c"
 #include "dependencies/BearHttpsClientOne.c"

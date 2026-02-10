@@ -22,7 +22,8 @@ typedef void appstringarray;
 typedef void appargv;
 
 //======================APP DEPS======================================================
-typedef struct appdeps{
+typedef struct appdeps appdeps;
+struct appdeps{
     
 
     //=====================STD FUNCTIONS==============================================
@@ -182,22 +183,11 @@ typedef struct appdeps{
     const unsigned char * (*get_asset_content)(const char *path,long *size,appbool *is_binary);
     appstringarray * (*list_assets)(const char *path);
 
-    
+    //============================SERVER==================================================
+    int (*start_server)(int port, const appserverresponse *(*handler)(appdeps *d, void *props), void *props, appbool single_process);
 
 
-} appdeps;
-
-typedef struct appstart {
-    int port;
-    int exit_code;
-    appbool start_server;
-    void *props;
-
-    appbool single_process;  
-    const appserverresponse * (*mainserver)(appdeps *d,void *props);
-    void (*free_props)(void *props);
-} appstart;
-
+};
 
 // ===================== MAIN SERVER =====================
 
@@ -228,25 +218,18 @@ const appserverresponse * private_mainserver(appdeps *deps, void *props) {
 }
 
 
-appstart public_appstart(appdeps *deps) {
+int appmain(appdeps *deps) {
 
-    appstart appstart = {0};
     const char *PORT_FLAGS[] = {"port", "p"};
     const char *start_port = deps->get_arg_flag_value(deps->argv, PORT_FLAGS, sizeof(PORT_FLAGS) / sizeof(PORT_FLAGS[0]), 0);
+    int port = 3000;
     if (start_port) {
-        appstart.port = deps->atoi(start_port);
-        if (appstart.port <= 0) {
-            appstart.exit_code = 1;
-            appstart.start_server = app_false;
+        port = deps->atoi(start_port);
+        if (port <= 0) {
             deps->printf("Invalid port number: %s\n", start_port);
-            return appstart;
+            return 1;
         }
-    } else {
-        appstart.port = 3000;
     }
-    appstart.props = app_null;
-    appstart.free_props = app_null;
-    appstart.start_server = app_true;
-    appstart.mainserver = private_mainserver;
-    return appstart;
+    deps->start_server(port, private_mainserver, app_null, app_false);
+    return 0;
 }
