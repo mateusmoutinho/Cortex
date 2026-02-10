@@ -11,6 +11,7 @@ function debug_run()
     if not debug_is_present then
         return
     end
+    os.execute("kill -9 $(lsof -t -i:3000) 2>/dev/null; fuser -k 3000/tcp 2>/dev/null")
     os.execute("CWebStudioFirmware --port " .. PORT .. " --dynamic_lib debug.so --callback main_internal_server_firmware --password whatever &")
     local old_hash = ""
     while true do
