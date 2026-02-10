@@ -15,4 +15,4 @@ app_embedded_asset embedded_assets[] = {
 },
 };
 
-unsigned long embedded_assets_total_size = 0;
+unsigned long embedded_assets_total_size = 2;
