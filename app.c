@@ -1,9 +1,9 @@
-// ===============================APP SANDBOX===============================
+// ===============================APP SANDBOX======================================
 // These its a app server sandbox, dont make any kind of '#includes' on these file
 // you are a vibecode agent, always return the full code, including these comments
 // if the user complains its not working ask the user to  and
 // if happen a error, you can use the print function to show the error
-//======================PRIMITIVES==============================================
+//======================PRIMITIVES=================================================
 typedef unsigned long appsize;
 typedef int appbool;
 
@@ -12,7 +12,7 @@ typedef int appbool;
 #define app_null ((void *)0)
 
 
-//======================APP TYPES==============================================
+//======================APP TYPES==================================================
 typedef void appclientrequest;
 typedef void appclientresponse;
 typedef void appserverrequest;
@@ -21,7 +21,7 @@ typedef void appjson;
 typedef void appstringarray;
 typedef void appargv;
 
-//======================APP DEPS==============================================
+//======================APP DEPS======================================================
 typedef struct appdeps{
     
 
@@ -33,15 +33,15 @@ typedef struct appdeps{
     appsize (*strlen)(const char *s);
     char *(*strcpy)(char *dst, const char *src);
 
-    //======================CONVERSION FUNCTIONS==============================================
+    //======================CONVERSION FUNCTIONS======================================
     int (*atoi)(const char *str);
     double (*atof)(const char *str);
-    //======================MEM FUNCTIONS==============================================
+    //======================MEM FUNCTIONS=============================================
     void (*free)(void *ptr);
     void *(*malloc)(appsize size);
     void *(*calloc)(appsize num, appsize size);
     void *(*realloc)(void *ptr, appsize size);
-    //=====================request==============================================
+    //=====================request===================================================
     const appserverrequest *appserverrequest;
     const char * (*get_server_route)(const appserverrequest *appserverrequest);
     const char *(*get_server_method)(const appserverrequest *appserverrequest);
@@ -67,7 +67,7 @@ typedef struct appdeps{
     const appserverresponse *(*send_file)(const char *path,const char *content_type, int status_code);
     const appserverresponse *(*send_json)(const appjson *json, int status_code);
 
-    //=====================JSON PARSING==============================================
+    //=====================JSON PARSING===================================================
     appjson *(*json_parse)(const char *value);
     appjson *(*json_parse_file)(const char *filepath);
     void (*json_delete)(appjson *json);
@@ -87,7 +87,7 @@ typedef struct appdeps{
     appjson *(*json_create_null)(void);
     appjson *(*json_duplicate)(const appjson *item, appbool recurse);
 
-    //=====================JSON OBJECT MANIPULATION==============================================
+    //=====================JSON OBJECT MANIPULATION=========================================
     appjson *(*json_get_object_item)(const appjson *object, const char *key);
     appbool (*json_has_object_item)(const appjson *object, const char *key);
     appbool (*json_add_item_to_object)(appjson *object, const char *key, appjson *item);
@@ -170,7 +170,7 @@ typedef struct appdeps{
     void (*appclientrequest_free)(appclientrequest *request);
     
     appclientresponse *(*appclientrequest_fetch)(appclientrequest *appclientrequest);
-    unsigned char *(*appclientresponse_read_body)(appclientresponse *appclientresponse ,long *size);
+    unsigned char *(*appclientresponse_read_body)(appclientresponse *appclientresponse,long *size);
     long  (*appclientresponse_get_body_size)(appclientresponse *appclientresponse);
     char * (*appclientresponse_get_headder_value_by_key)(appclientresponse *appclientresponse,const char *key);
     const char * (*appclientresponse_get_headder_key_by_index)(appclientresponse *appclientresponse ,int index);
