@@ -7,6 +7,7 @@ libs
 .cache
 quickbuild.sh
 app
+a.exe
 start_firmware.sh
 debug.so
 dependencies

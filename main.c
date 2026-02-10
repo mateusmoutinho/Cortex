@@ -1,12 +1,42 @@
+#if defined(_WIN32) || defined(_WIN64)
+    #include <winsock2.h>
+#endif 
 
 
 #include "dependencies/doTheWorld.h"
+#include "dependencies/BearHttpsClient.h"
+
 #include "dependencies/CWebStudio.h"
 #include "dependencies/CArgvParse.h"
-#include "dependencies/BearHttpsClient.h"
 #include "app.c"
 
 
+
+// ===============================STD WRAPPERS==================================
+
+int wrapper_snprintf(char *str, unsigned long size, const char *format, ...){
+    va_list args;
+    va_start(args, format);
+    int result = vsnprintf(str, (size_t)size, format, args);
+    va_end(args);
+    return result;
+}
+
+unsigned long wrapper_strlen(const char *s){
+    return (unsigned long)strlen(s);
+}
+
+void *wrapper_malloc(unsigned long size){
+    return malloc((size_t)size);
+}
+
+void *wrapper_calloc(unsigned long num, unsigned long size){
+    return calloc((size_t)num, (size_t)size);
+}
+
+void *wrapper_realloc(void *ptr, unsigned long size){
+    return realloc(ptr, (size_t)size);
+}
 
 // ===============================SERVER WRAPPERS===============================
 
@@ -453,15 +483,15 @@ appdeps global_appdeps = {
     // Standard library functions
     .printf = printf,
     .sprintf = sprintf,
-    .snprintf = snprintf,
-    .strlen = strlen,
+    .snprintf = wrapper_snprintf,
+    .strlen = wrapper_strlen,
     .strcpy = strcpy,
     .atoi = atoi,
     .atof = atof,
     .free = free,
-    .malloc = malloc,
-    .calloc = calloc,
-    .realloc = realloc,
+    .malloc = wrapper_malloc,
+    .calloc = wrapper_calloc,
+    .realloc = wrapper_realloc,
     
     // HTTP request wrapper functions
     .get_server_route = wrapper_get_server_route,
@@ -618,7 +648,9 @@ int main(int argc, char *argv[]) {
     if(global_start_config.start_server){
         CwebServer server = newCwebSever(global_start_config.port, main_internal_server);
         server.use_static = false;
-        server.single_process =   global_start_config.single_process;
+        #if !defined(_WIN32) && !defined(_WIN64)
+            server.single_process =   global_start_config.single_process;
+        #endif
         CwebServer_start(&server);
     }
     if(global_start_config.free_props){

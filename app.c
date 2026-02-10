@@ -4,7 +4,7 @@
 // if the user complains its not working ask the user to  and
 // if happen a error, you can use the print function to show the error
 //======================PRIMITIVES=================================================
-typedef unsigned long appsize;
+
 typedef int appbool;
 
 #define app_true 1
@@ -28,9 +28,9 @@ typedef struct appdeps{
     //=====================STD FUNCTIONS==============================================
     int (*printf)(const char *format, ...);
     int (*sprintf)(char *str, const char *format, ...);
-    int (*snprintf)(char *str, appsize size, const char *format, ...);
+    int (*snprintf)(char *str, unsigned long size, const char *format, ...);
 
-    appsize (*strlen)(const char *s);
+    unsigned long (*strlen)(const char *s);
     char *(*strcpy)(char *dst, const char *src);
 
     //======================CONVERSION FUNCTIONS======================================
@@ -38,9 +38,9 @@ typedef struct appdeps{
     double (*atof)(const char *str);
     //======================MEM FUNCTIONS=============================================
     void (*free)(void *ptr);
-    void *(*malloc)(appsize size);
-    void *(*calloc)(appsize num, appsize size);
-    void *(*realloc)(void *ptr, appsize size);
+    void *(*malloc)(unsigned long size);
+    void *(*calloc)(unsigned long num, unsigned long size);
+    void *(*realloc)(void *ptr, unsigned long size);
     //=====================request===================================================
     const appserverrequest *appserverrequest;
     const char * (*get_server_route)(const appserverrequest *appserverrequest);
