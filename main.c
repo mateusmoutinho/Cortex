@@ -479,7 +479,7 @@ void wrapper_httpclient_response_free(void *response){
     BearHttpsResponse *resp = (BearHttpsResponse *)response;
     BearHttpsResponse_free(resp);
 }
-unsigned char *wrapper_get_asset_content(const char *path,long *size,bool *is_binary){
+const unsigned char *wrapper_get_asset_content(const char *path,long *size,int *is_binary){
     for(int i=0; i < embedded_assets_total_size; i++){
         if(strcmp(embedded_assets[i].path, path) == 0){
             *size = embedded_assets[i].size;
@@ -685,7 +685,7 @@ int main(int argc, char *argv[]) {
     }
     return global_start_config.exit_code;
 }
-#include "assets.h"
+#include "assets.c"
 #include "dependencies/BearHttpsClientOne.c"
 #include "dependencies/CArgvParseOne.c"
 #include "dependencies/CWebStudioOne.c"

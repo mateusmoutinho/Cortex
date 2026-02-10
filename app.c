@@ -179,7 +179,7 @@ typedef struct appdeps{
     void (*free_clientresponse)(appclientresponse *appclientresponse);
 
     //============================ASSETS==================================================
-    const unsigned char * (*get_asset_content)(const char *path,long *size);
+    const unsigned char * (*get_asset_content)(const char *path,long *size,appbool *is_binary);
     appstringarray * (*list_assets)(const char *path);
 
     
