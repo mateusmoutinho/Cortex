@@ -35,7 +35,7 @@ now you can chose from the followin building ways:
 these template its compilation ready, you can compile the application using gcc with the following command:
 
 requirements:
-- gcc must be installed in your system.
+- [gcc or clang](#gcc-or-clang) must be installed in your system.
 
 ```bash
 gcc main.c -o app
@@ -45,9 +45,11 @@ then you can run the application with:
 ./app
 ```
 ### Amalgamation
-you can create a single `.c`containing all the code of the application, including the cortex code with darwin. 
+you can create a single `.c`containing all the code of the application, including the cortex code with darwin.
+
 requirements:
-- Darwin must be installed in your system.
+- [Darwin](#darwin) must be installed in your system.
+- [gcc or clang](#gcc-or-clang) must be installed in your system.
 
 ~~~bash
  darwin run_blueprint --target amalgamation
@@ -62,17 +64,32 @@ and run it with:
 ```
 ### Static Linux Binary
 you can create a static binary for your application using Darwin with the following command:
+
+requirements:
+- [Darwin](#darwin) must be installed in your system.
+- [Docker or Podman](#docker-or-podman) must be installed in your system.
+
 ```bash
 darwin run_blueprint --target static_linux --provider docker
 ```
 ### Windows Executable
 you can create a windows executable for your application using Darwin with the following command:
+
+requirements:
+- [Darwin](#darwin) must be installed in your system.
+- [Docker or Podman](#docker-or-podman) must be installed in your system.
+
 ```bash
 darwin run_blueprint --target windows --provider docker
 ```
 
 ### .Deb or .rpm package
 you can create a .deb or .rpm package for your application using Darwin with the following command:
+
+requirements:
+- [Darwin](#darwin) must be installed in your system.
+- [Docker or Podman](#docker-or-podman) must be installed in your system.
+
 ```bash
 darwin run_blueprint --target deb --provider docker
 ```
@@ -80,8 +97,14 @@ or
 ```bash
 darwin run_blueprint --target rpm --provider docker
 ```
-### Debug Run 
+### Debug Run
 you can run the application in debug mode, which will automatically rebuild the debug.so dynamic library whenever the source code changes and run the application with it. to do that, you can use the following command:
+
+requirements:
+- [Darwin](#darwin) must be installed in your system.
+- [gcc or clang](#gcc-or-clang) must be installed in your system.
+- [CWebStudioFirmware](#cwebstudiofirmware) must be installed in your system.
+
 ```bash
 darwin run_blueprint --target debug --compiler "gcc"
 ```
