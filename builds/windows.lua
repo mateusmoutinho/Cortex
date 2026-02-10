@@ -16,7 +16,7 @@ function windowsi32_build()
         volumes = {
             { "././release", "/release" },
         },
-        command = compiler..[[ --static /release/]]..PROJECT_NAME..[[  -o /release/]]..PROJECT_NAME..[[.exe -lws2_32]]
+        command = compiler..[[ --static /release/]]..PROJECT_NAME..[[.c  -o /release/]]..PROJECT_NAME..[[.exe -lws2_32]]
     })
 end
 
