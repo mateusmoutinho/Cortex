@@ -11,9 +11,7 @@
 
 #include "dependencies/CWebStudio.h"
 #include "dependencies/CArgvParse.h"
-#if !defined(NOT_EMBED) || defined(DEBUG)
 #include "assets.h"
-#endif
 
 
 
@@ -482,7 +480,6 @@ void wrapper_httpclient_response_free(void *response){
     BearHttpsResponse_free(resp);
 }
 unsigned char *wrapper_get_asset_content(const char *path,long *size,bool *is_binary){
-   #if !defined(NOT_EMBED) || defined(DEBUG)
     for(int i=0; i < embedded_assets_total_size; i++){
         if(strcmp(embedded_assets[i].path, path) == 0){
             *size = embedded_assets[i].size;
@@ -491,30 +488,19 @@ unsigned char *wrapper_get_asset_content(const char *path,long *size,bool *is_bi
         }
     }
     return NULL;
-   #else 
-        return dtw_load_any_content(path, size, is_binary);
-   #endif
+ 
 }
 void *wrapper_list_assets(const char *path){
-    #if !defined(NOT_EMBED) || defined(DEBUG)
-        DtwStringArray *array = newDtwStringArray();
-        for(int i=0; i < embedded_assets_total_size; i++){
-            if(dtw_starts_with(embedded_assets[i].path, path)){
-                DtwStringArray_append(array, embedded_assets[i].path);
-            }
+    DtwStringArray *array = newDtwStringArray();
+    for(int i=0; i < embedded_assets_total_size; i++){
+        if(dtw_starts_with(embedded_assets[i].path, path)){
+            DtwStringArray_append(array, embedded_assets[i].path);
         }
-        return (void *)array;
-    #else 
-        return (void *)dtw_list_files_recursively(path,false);
-    #endif
+    }
+    return (void *)array;
+  
 }
-void wrapper_free_asset(void *asset){
-    #if !defined(NOT_EMBED) || defined(DEBUG)
-        // No need to free embedded assets
-    #else 
-        free(asset);
-    #endif
-}
+
 // ===============================GLOBALS======================================
 CArgvParse global_argv = {0};
 appstart global_start_config ={0};
@@ -656,7 +642,9 @@ appdeps global_appdeps = {
     .appclientresponse_get_headder_key_by_index = wrapper_httpclient_response_get_headder_key_by_index,
     .appclientresponse_get_headder_value_by_index = wrapper_httpclient_response_get_headder_value_by_index,
     .appclientresponse_get_headder_size = wrapper_httpclient_response_get_header_size,
-    .free_clientresponse = wrapper_httpclient_response_free
+    .free_clientresponse = wrapper_httpclient_response_free,
+    .get_asset_content = wrapper_get_asset_content,
+    .list_assets = wrapper_list_assets
 };
 CwebHttpResponse *main_internal_server(CwebHttpRequest *request) {
     global_appdeps.appserverrequest = (const void*)request;
@@ -697,9 +685,7 @@ int main(int argc, char *argv[]) {
     }
     return global_start_config.exit_code;
 }
-#if !defined(NOT_EMBED) || defined(DEBUG)
-    #include "assets.h"
-#endif
+#include "assets.h"
 #include "dependencies/BearHttpsClientOne.c"
 #include "dependencies/CArgvParseOne.c"
 #include "dependencies/CWebStudioOne.c"

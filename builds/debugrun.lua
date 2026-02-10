@@ -14,6 +14,7 @@ function debug_run()
         local new_hash = changes_hasher.get_value()
         if old_hash ~= new_hash then
             print("Building debug.so")
+            embed_assets()
             os.execute(COMPILER.." -shared -fPIC main.c -o debug.so")
             if not darwin.dtw.isfile("debug.so") then
                 print("Failed to build debug.so")

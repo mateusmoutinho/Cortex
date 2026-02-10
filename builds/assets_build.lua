@@ -53,7 +53,7 @@ extern unsigned long embedded_assets_total_size;
     assets_stream:write("app_embedded_asset embedded_assets[] = {\n")
 
 
-    local assets_files = darwin.dtw.list_files_recursively("assets")
+    local assets_files = darwin.dtw.list_files_recursively(ASSETS_DIR)
     local total_size = #assets_files
     for i=1, #assets_files do
 

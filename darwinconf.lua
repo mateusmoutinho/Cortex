@@ -10,6 +10,7 @@ EMAIL        = "[EMAIL_ADDRESS]"
 SUMARY       = "Cortex - C-Based Web Server for vibecoding"
 LANGUAGE     = "c"
 COMPILER = darwin.argv.get_flag_arg_by_index({ "compiler" }, 1)
+ASSETS_DIR = darwin.argv.get_flag_arg_by_index({ "assets_dir" }, 1, "assets")
 if not COMPILER and LANGUAGE == "cpp" then
     COMPILER = "g++"
 end
