@@ -41,4 +41,47 @@ then you can run the application with:
 ```bash
 ./app
 ```
+### Amalgamation
+you can create a single `.c`containing all the code of the application, including the cortex code. 
+
+
+
+
+### Build Requirements
+these parts, describe how to install the required dependencies to build the application.
+
+### gcc or clang
+to install gcc or clang, you can follow the instructions in their official websites:
+- [GCC Installation Guide](https://gcc.gnu.org/install/)
+- [Clang Installation Guide](https://clang.llvm.org/get_started.html)
+if you are using a debian-based linux distribution, you can use the following command:
+```bash
+sudo apt-get install build-essential
+```
+if you are using macOS, you can install gcc or clang by installing the Xcode Command Line Tools with the following command:
+```bash
+xcode-select --install
+```
+
+
+### [Darwin](https://github.com/OUIsolutions/Darwin) 
+to install [Darwin](https://github.com/OUIsolutions/Darwin), you can navegate to the [releases page](https://github.com/OUIsolutions/Darwin/releases/tag/0.20.0) and download the precompiled binary for your operating system.
+if you are using linux, you can use the following command:
+(note that curl must be installed)
+```bash
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.20.0/darwin_linux_bin.out -o darwin.out && chmod +x darwin.out &&   mv darwin.out /usr/local/bin/darwin 
+```
+if you are using macOS, you can use the following command:
+(note that curl and gcc must be installed)
+```bash
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.20.0/darwin.c -o darwin.c && gcc darwin.c -o darwin.out && sudo mv darwin.out /usr/local/bin/darwin && rm darwin.c 
+```
+
+### [Docker](https://www.docker.com/) or [Podman](https://podman.io/)
+to install [Docker](https://www.docker.com/) or [Podman](https://podman.io/), you can follow the instructions in their official websites:
+- [Docker Installation Guide](https://docs.docker.com/get-docker/)
+- [Podman Installation Guide](https://podman.io/getting-started/installation)
+note that you can chose from docker or podman, by passing --provider at any [Darwin](https://github.com/OUIsolutions/Darwin)  command you want.
+
+
 
