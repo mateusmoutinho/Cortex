@@ -1,8 +1,6 @@
 
 .darwincache
 release/
-src/
-src/fdeclare.all.h
 libs
 .cache
 quickbuild.sh
